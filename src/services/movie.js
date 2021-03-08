@@ -19,10 +19,10 @@ export async function updateMovieDetail(movie) {
     const $ = await cheerio.load(response);
     movie.trailer = ""; 
     // movie.trailer = $("iframe").attr("src") || "";
-    movie.description = $("article.item-content").text().trim() || "";
-    movie.categories = $(".movie-detail p").eq(4).text().split(":")[1] || "";
+    movie.description = $("article.item-content").text() ? $("article.item-content").text().trim() : "";
+    movie.categories = $(".movie-detail p").eq(4).text() ? $(".movie-detail p").eq(4).text().split(":")[1].trim() : "";
     movie.slug_cats = (movie.categories && slug(movie.categories)) || "";
-    movie.times = $(".movie-detail p").eq(-1).text().split(":")[1] || "";
+    movie.times = $(".movie-detail p").eq(-1).text() ? $(".movie-detail p").eq(-1).text().split(":")[1].trim() : "";
     movie.views = 1000;
         // +$(".movie-detail p")
         //     .eq(-2)
@@ -35,11 +35,10 @@ export async function updateMovieDetail(movie) {
         //     .replace(",", "")
         //     .replace("'", "")
         //     .replace('"', "") : 1000;
-    movie.year = $(".movie-detail p").eq(3).text().split(":")[1] || 2021;
-    movie.country = $(".movie-detail p").eq(5).text().split(":")[1] || "";
-    movie.actors = $(".movie-detail p").eq(5).text().split(":")[1] || "";
-    movie.director = $(".movie-detail p").eq(-3).text().split(":")[1] || "";
-    // movie.rating = +$("#average").text().trim() || 100;
+    movie.year = $(".movie-detail p").eq(3).text() ? $(".movie-detail p").eq(3).text().split(":")[1].trim() : 2021;
+    movie.country = $(".movie-detail p").eq(5).text() ? $(".movie-detail p").eq(5).text().split(":")[1].trim() : "Chưa xác định";
+    movie.actors = $(".movie-detail p").eq(5).text() ? $(".movie-detail p").eq(5).text().split(":")[1].trim() : "Chưa xác định";
+    movie.director = $(".movie-detail p").eq(-3).text() ? $(".movie-detail p").eq(-3).text().split(":")[1].trim() : "Chưa xác định";
     movie.rating = +$("span.score").text() ? +$("span.score").text().trim() : 100;
     // movie.poster = $("p img").attr("src") || "";
     movie.rating_count = +$("#rate_count").text() ? +$("#rate_count").text().trim() : 50;
@@ -48,6 +47,7 @@ export async function updateMovieDetail(movie) {
 }
 
 export async function getListMovies(page) {
+    console.log("page : ", page);
     const baseURL = `https://phimgi.tv/phim-le/page/${page}/`;
     // https://phimgi.tv/phim-le/page/216/
     const response = await request.get(baseURL); 
@@ -99,3 +99,5 @@ export async function getMovieSrc(movie) {
     await browser.close();
     // console.log('end');
 }
+// https://loadbalance.manga123.net/public/dist/index.html?id=9f864ad1024c8b36828befbd5ba6878b&sub=
+// https://loadbalance.manga123.net/public/dist/index.html?id=9f864ad1024c8b36828befbd5ba6878b&sub=

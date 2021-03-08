@@ -6,7 +6,7 @@ import { dbConnect, env, dbClean } from "./configs";
 import { Movie } from "./models";
 
 async function testDB() {
-    crawlMovies()
+    crawlMovies() 
     // const { dbClean } = await dbConnect("mongodb://localhost:27017/phe-phim");
     // await dbClean();   
 
