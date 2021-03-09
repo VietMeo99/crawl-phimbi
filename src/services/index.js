@@ -5,9 +5,9 @@ import Redis from "ioredis";
 import kue from "kue";
 
 import { dbConnect, env } from "../configs";
-// import { MovieBi } from "../models/MovieBi";
+import { MovieBi } from "../models/MovieBi";
 // import { Movie } from "../models";
-import { MovieGi } from "../models/MovieGi";
+// import { MovieGi } from "../models/MovieGi";
 
 const queue = kue.createQueue({
     redis: {
@@ -30,9 +30,10 @@ export async function crawlMovies() {
     //     await Promise.all(request).catch(e => console.log('e : ', e))
     // }
     
-    for(let i=1; i <= 518 ; i ++){ // phim gi
+    // for(let i=52; i <= 518 ; i ++){ // phim gi
+    for(let i=145; i <= 152 ; i ++){ // phim gi
         console.log('i : ', i);
-        let data = (await MovieGi.paginate({}, {page: i,limit: 20})).docs;
+        let data = (await MovieBi.paginate({}, {page: i,limit: 20})).docs;
         const request = data.map((item) => {
             if(item.src == "")
                 return getMovieSrc(item).catch(e => console.log('e : ', e));

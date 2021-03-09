@@ -85,7 +85,8 @@ export async function getMovieSrc(movie) {
     });
     movie.src = await page.evaluate(() => {
     // eslint-disable-next-line no-undef
-    return document.querySelector("iframe.embed-responsive-item") ? document.querySelector("iframe.embed-responsive-item").getAttribute("src") : "";
+    // return document.querySelector("iframe.embed-responsive-item") ? document.querySelector("iframe.embed-responsive-item").getAttribute("src") : "";
+    return document.querySelector("iframe.lazyloaded") ? document.querySelector("iframe.lazyloaded").getAttribute("src") : "";
     });
     console.log('src : ', movie.src);
     await movie.save();
