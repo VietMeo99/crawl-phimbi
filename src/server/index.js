@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -10,7 +11,7 @@ import { getMovieSrc } from "../services";
 
 export async function main() {
     // eslint-disable-next-line no-unused-vars
-    const { dbClean } = await dbConnect(env.uri);
+    // const { dbClean } = await dbConnect(env.uri);
     const app = express();
 
     app.use(express.json());
